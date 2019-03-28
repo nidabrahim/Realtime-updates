@@ -26,7 +26,7 @@ public class OrderOpenedEventListener  {
     public void on(OrderOpenedEvent event){
         logger.info("Handling event : " + event);
 
-        orders.create(event.getId(),event.getCustomerId(),null);
+        orders.create(event.getId(),event.getCustomerId(),event.getProducts());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.easyeat.realtimeMicroservice.api;
 
 import com.easyeat.realtimeMicroservice.api.dto.OrderDTO;
+import com.easyeat.realtimeMicroservice.api.dto.ProductDTO;
 import com.easyeat.realtimeMicroservice.commandeSide.commands.CancelOrderCommand;
 import com.easyeat.realtimeMicroservice.commandeSide.commands.OpenOrderCommand;
 import com.easyeat.realtimeMicroservice.commandeSide.services.OrderCommandService;
@@ -63,8 +64,10 @@ public class OrderController {
         logger.info("body : "+body);
         String id = UUID.randomUUID().toString();
         String customerId = body.getCustomerId();
+        List<ProductDTO> products = body.getProducts();
         logger.info("Customer id : "+customerId);
-        return orderCommandService.save(id,customerId);
+        logger.info("products  : "+ products.get(0).getDescription());
+        return orderCommandService.save(id,customerId,products);
     }
 
     @PutMapping("{id}/paid")

@@ -11,12 +11,18 @@ import lombok.experimental.FieldDefaults;
 import org.axonframework.eventhandling.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @Component
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class WebSocketEventsTranslator {
+
+    @Autowired
+    WebSocketEventsHandler wsSession;
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -42,6 +48,11 @@ public class WebSocketEventsTranslator {
 
     private void sendEvent(Event event){
         logger.info("Sending order event to webSocket : " + event);
+        //try {
+        //    wsSession.sendEvent(event);
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+       // }
     }
 
 }

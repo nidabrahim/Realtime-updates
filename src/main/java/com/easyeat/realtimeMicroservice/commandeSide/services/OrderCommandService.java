@@ -1,5 +1,6 @@
 package com.easyeat.realtimeMicroservice.commandeSide.services;
 
+import com.easyeat.realtimeMicroservice.api.dto.ProductDTO;
 import com.easyeat.realtimeMicroservice.commandeSide.commands.CancelOrderCommand;
 import com.easyeat.realtimeMicroservice.commandeSide.commands.OpenOrderCommand;
 import com.easyeat.realtimeMicroservice.commandeSide.commands.PayOrderCommand;
@@ -10,6 +11,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.concurrent.Future;
 
 @AllArgsConstructor
@@ -26,9 +28,9 @@ public class OrderCommandService {
         return callback.toCompletableFuture();
     }
 
-    public Future<?> save(String id, String customerId){
+    public Future<?> save(String id, String customerId, List<ProductDTO> products){
         FutureCallback<OpenOrderCommand, Object> callback = new FutureCallback<>();
-        commandGateway.send(new OpenOrderCommand(id,customerId), callback);
+        commandGateway.send(new OpenOrderCommand(id,customerId,products), callback);
         return callback.toCompletableFuture();
     }
 

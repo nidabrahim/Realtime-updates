@@ -1,10 +1,12 @@
 package com.easyeat.realtimeMicroservice.api;
 
 import com.easyeat.realtimeMicroservice.api.dto.CustomerDTO;
-import com.easyeat.realtimeMicroservice.api.dto.OrderDTO;
+import com.easyeat.realtimeMicroservice.api.dto.ProductDTO;
 import com.easyeat.realtimeMicroservice.querySide.models.Customer;
+import com.easyeat.realtimeMicroservice.querySide.models.Order;
 import com.easyeat.realtimeMicroservice.querySide.models.Product;
 import com.easyeat.realtimeMicroservice.querySide.services.updateServices.CustomerUpdateService;
+import com.easyeat.realtimeMicroservice.querySide.services.updateServices.ProductUpdateService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,37 +21,37 @@ import java.util.UUID;
 import java.util.concurrent.Future;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/products")
 @ResponseStatus(HttpStatus.ACCEPTED)
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class CustomerController {
+public class ProductController {
 
     @Autowired
-    CustomerUpdateService customerUpdateService;
+    ProductUpdateService productUpdateService;
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
     @PostMapping("create")
-    public Customer create(@RequestBody CustomerDTO body){
-        logger.info("CustomerDTO : "+ body);
+    public Product create(@RequestBody ProductDTO body){
+        logger.info("ProductDTO : "+ body);
         String id = UUID.randomUUID().toString();
-        return customerUpdateService.create(id,body);
+        return productUpdateService.create(id,body);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Customer> getProducts(){
-        return customerUpdateService.getAllCustomers();
+    public List<Product> getProducts(){
+        return productUpdateService.getAllProducts();
     }
 
     @GetMapping("{id}")
-    public Customer getProducts(@PathVariable String id){
-        return customerUpdateService.getCustomerById(id);
+    public Product getProducts(@PathVariable String id){
+        return productUpdateService.getProductById(id);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable String id){
-        customerUpdateService.delete(id);
+        productUpdateService.delete(id);
     }
 }
